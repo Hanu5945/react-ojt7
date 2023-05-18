@@ -3,7 +3,7 @@ import React from 'react';
 function Home() {
     return (
         <div>
-            Home 원본
+            Home 집에서 수정함
         </div>
     )
 }
