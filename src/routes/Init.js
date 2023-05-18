@@ -1,11 +1,11 @@
 import React from 'react'
 
-function App() {
+function Init() {
   return (
     <div>
-      App
+      Init
     </div>
   )
 }
 
-export default App
+export default Init
