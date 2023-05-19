@@ -22,7 +22,7 @@ function Ojt() {
   return (
     <div>
       <BrowserRouter>
-      <header>{userObj  && <><Navigation /><LogOut /></>}</header>
+        <header>{userObj && <><Navigation /><LogOut /></>}</header>
         <Router userObj={userObj} />
         <footer></footer>
       </BrowserRouter>

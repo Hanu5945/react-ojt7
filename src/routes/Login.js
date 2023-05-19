@@ -35,6 +35,7 @@ function Login() {
 
     return (
         <div style={{ border: 'solid 1px black' }}>
+            유저 정보 가져와서 있으면 로그인하지 않도록
             Login
             <form onSubmit={onSubmit}>
                 <input placeholder='아이디' type='text' name='email' onChange={onChange} /><br />

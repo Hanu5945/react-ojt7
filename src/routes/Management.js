@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { dbService } from 'fbase';
 import Manage from 'components/grid/Manage'
-
+import Naver from 'components/map/Naver';
 function Management() {
 
   const [data, setDate] = useState([]);
@@ -37,6 +37,11 @@ function Management() {
           </div>
         ))} */}
         <Manage item={data} />
+        {data.length > 0 ? <Naver item={data} /> : "" }
+        {/* data가 있을때만 실행
+            (item을 먼저 받아서 초기 로딩시 실행이 안되기 때문에 삼항연산자 사용)
+        */}
+
       </div>
     </div>
   )

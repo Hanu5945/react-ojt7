@@ -36,6 +36,8 @@ function Login() {
     }
     return (
         <div>
+            {}
+
             <form onSubmit={onSubmit}>
                 <label>ID </label><input type='text' placeholder='Email' name='email' onChange={onInputChange} value={email} /><br />
                 <label>PW </label><input type='password' placeholder='PW' name='pw' onChange={onInputChange} value={pw} /><br />

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function TapSpan({ TapText }) {
+function Tapspan({ TapText }) {
   return (
     <>
       <span style={{ color: 'black'}}>{TapText}</span>
@@ -8,4 +8,4 @@ function TapSpan({ TapText }) {
   )
 }
 
-export default TapSpan
+export default Tapspan
