@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Tapspan from 'components/Tapspan';
+import Tapspan from 'components/TapSpan';
 function Navigation() {
     return (
         <nav>
