@@ -2,11 +2,11 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { dbService } from 'fbase';
 import Manage from 'components/grid/Manage'
-import Naver from 'components/map/Naver';
+// import Naver from 'components/map/Naver';
+
 function Management() {
 
   const [data, setDate] = useState([]);
-
   useEffect(() => {
     // snapshot : 데이터베이스가 변화할때마다 감지한다 (즉, collection 'manage'가 변화하면 감지)
     dbService.collection('manage').onSnapshot(snapshot => {
@@ -16,6 +16,9 @@ function Management() {
         id: doc.id,     // 문서ID
         ...doc.data(),  // 데이터 ...사용하여 요소로 접근
       }))
+
+      // sort 사용하여 오름차순
+      dbData.sort((a, b) => a.이동수단ID.localeCompare(b.이동수단ID));
 
       setDate(dbData);
     })
@@ -37,11 +40,10 @@ function Management() {
           </div>
         ))} */}
         <Manage item={data} />
-        {data.length > 0 ? <Naver item={data} /> : "" }
+        {/* {data.length > 0 ? <Naver item={data} /> : "" } */}
         {/* data가 있을때만 실행
-            (item을 먼저 받아서 초기 로딩시 실행이 안되기 때문에 삼항연산자 사용)
+            (삼항연산자 사용하여 item이 있을때만 실행)
         */}
-
       </div>
     </div>
   )

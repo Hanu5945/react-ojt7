@@ -3,7 +3,7 @@ import React from 'react';
 function Home() {
     return (
         <div>
-            Home 집에서 수정함
+            Home 2023 05 22
         </div>
     )
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Grid, GridColumn } from '@progress/kendo-react-grid';
 import "@progress/kendo-theme-default/dist/all.css";
+import Naver from 'components/map/Naver';
 
 function Manage({ item }) {
   // 초기 데이터 상태
@@ -14,7 +15,7 @@ function Manage({ item }) {
   console.log('pageSizeValue', pageSizeValue);
 
   // 페이지 변경 시 호출되는 콜백 함수
-  const pageChange = (event) => {
+  const onPageChange = (event) => {
     const targetEvent = event.targetEvent;
     const take = targetEvent.value === "All" ? item.length : event.page.take; // All인 경우 : data의 길이를 전부 보여줌, 아닌 경우 : 선택한 숫자만큼 보여줌
     if (targetEvent.value) {
@@ -25,6 +26,15 @@ function Manage({ item }) {
       take,           // 한 페이지에 보여줄 항목 수(위의 event에서 정의된 변수를 가져옴)
     });
   };
+
+  // 클릭한 행의 데이터와 인덱스 저장
+  const [clickData, setClickData] = useState();
+  console.log('clickData', clickData);
+  // 행 클릭시 클릭한 행의 데이터 전달
+  const onRowClick = (e) => {
+    setClickData(e.dataItem);
+    console.log('e.dataItem', e.dataItem);
+  }
 
   return (
     <>
@@ -39,8 +49,10 @@ function Manage({ item }) {
           pageSizes: [5, 10, 15, "All"], // 페이지 크기 선택 옵션
           pageSizeValue: pageSizeValue, // 초기 페이지 크기
         }}
-        onPageChange={pageChange}
+        onPageChange={onPageChange}
+        onRowClick={onRowClick}
       >
+
         {/* field - 받은 데이터의 key값, title - 보여줄 컬럼명 */}
         <GridColumn field="이동수단ID" title="이동수단ID" />
         <GridColumn field="위치" title="위치" />
@@ -48,6 +60,7 @@ function Manage({ item }) {
         <GridColumn field="타입" title="타입" />
         <GridColumn field="연식" title="연식" />
       </Grid>
+      <Naver item={item} clickData={clickData} />
     </>
   );
 }
