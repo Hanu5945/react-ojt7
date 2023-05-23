@@ -1,10 +1,13 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Grid, GridColumn } from '@progress/kendo-react-grid';
 import "@progress/kendo-theme-default/dist/all.css";
 import Naver from 'components/map/Naver';
+import { dbService } from 'fbase';
+import { collection, addDoc } from "firebase/firestore";
 
 function Manage({ item }) {
+
   // 초기 데이터 상태
   const initialDataState = {
     skip: 0,
@@ -12,7 +15,6 @@ function Manage({ item }) {
   };
   const [page, setPage] = useState(initialDataState);   // 페이지와 페이지 크기 관련 상태 관리
   const [pageSizeValue, setPageSizeValue] = useState(); // 현재 선택된 페이지 크기 관리 (undefined로 설정한 이유 : 초기 렌더링 시에는 사용자가 크기를 선택하지 않았기 때문)
-  console.log('pageSizeValue', pageSizeValue);
 
   // 페이지 변경 시 호출되는 콜백 함수
   const onPageChange = (event) => {
@@ -27,13 +29,160 @@ function Manage({ item }) {
     });
   };
 
-  // 클릭한 행의 데이터와 인덱스 저장
-  const [clickData, setClickData] = useState();
-  console.log('clickData', clickData);
+
+  const [clickData, setClickData] = useState(); // 클릭한 행의 데이터와 인덱스 저장
+  const [open, setOpen] = useState(false);      // 팝업 열고 닫음 여부
+  const [newData, setNewData] = useState('');   // 팝업용 데이터
+  const [showInput, setShowInput] = useState(false);  // 보여줄 Input
+  const [inputText, setInputText] = useState('');     // 보여줄 Input Text
+  const [showBtn, setShowBtn] = useState(false);      // 보여줄 Btn
+  const [showBtnText, setShowBtnText] = useState('');      // 보여줄 Btn
+
+  const [inputData, setInputData] = useState('');     // input에 입력한 글
   // 행 클릭시 클릭한 행의 데이터 전달
   const onRowClick = (e) => {
     setClickData(e.dataItem);
-    console.log('e.dataItem', e.dataItem);
+  }
+
+  // 더블클릭시 팝업 열기
+  const openPopup = (e) => {
+    setOpen(true);
+    setNewData(e.dataItem);
+  }
+
+  // 팝업 닫기
+  const closePopup = () => {
+    setOpen(false)
+    setShowInput(false) // 팝업을 닫으면서 false로 지정 (input 닫기)
+    setShowBtn(false);  // 팝업을 닫으면서 false로 지정 (이동요청 고장신고 버튼 닫기)
+  }
+
+  // open은 동기적 문제로 false였으나 useEffect 사용하여 open이 바뀔때 실행 문제를 해결 )
+  useEffect(() => {
+    if (open) {
+      let popup = document.querySelector('.popup');
+      popup.style.display = 'block';
+      popup.style.border = 'solid 3px black';
+      popup.style.width = '300px';
+      popup.style.height = '100px';
+      popup.style.background = 'white';
+      popup.style.position = 'relative';
+      popup.style.bottom = '390px';
+      popup.style.left = '51%';
+    }
+  }, [open]);  // open이 바뀌면 useEffect 감지
+
+
+  let move = document.querySelector('.move');
+  let breakdown = document.querySelector('.breakdown');
+  let pay = document.querySelector('.pay');
+  if (showInput === true) {
+    move.style.display = 'none';      // 이동, 고장 버튼 숨기기
+    breakdown.style.display = 'none';
+    pay.style.display = 'none';
+    console.log('if문 접근');
+  }
+
+  // 결제 버튼
+  const onPay = () => {
+    console.log('onPay 클릭');
+    setShowInput(true);
+    setInputText('결제금액');
+    setShowBtn(true);
+    setShowBtnText('결제');
+  }
+
+  // 이동 버튼
+  const onMove = (e) => {
+    console.log('onMove 클릭');
+    setShowInput(true)
+    setShowBtn(true)
+    setInputText('이동 도착예정지를 입력해주세요.');
+    setShowBtnText('이동');
+  }
+  // 고장 버튼
+  const onBreakdown = () => {
+    console.log('onBreakdown 클릭');
+    setShowInput(true)
+    setShowBtn(true)
+    setInputText('고장 사유를 입력해주세요.');
+    setShowBtnText('고장');
+  }
+
+  // input에 입력한 글 업데이트
+  const onChange = (e) => {
+    setInputData(e.target.value);
+  }
+
+  const onSendData = async (e) => {
+    console.log(' 버튼 클릭 ', e.target.name);
+    // navigate('/MoveRequest', <MoveRequest test={test} />);
+    if (e.target.name === '이동') {
+      
+      if (inputData.length > 1) {
+        await addDoc(collection(dbService, "move"), {
+          // await dbService.collection("nweets").add({
+          createdAt: Date().substring(11, 24),  // 필요한 부분만 잘라서 add
+          이동수단ID: newData.이동수단ID,
+          위치: newData.위치,
+          상세위치: newData.상세위치,
+          타입: newData.타입,
+          연식: newData.연식 + '년',
+          text: inputData
+        });
+        setInputData(""); //입력창 초기화
+        alert(' 해당 데이터를 이동요청 하였습니다.');
+        setOpen(false)
+        // ※ 공란체크도 필요
+      } else if (inputData.length <= 1) {
+        alert('이동 도착예정지를 입력해주세요.');
+      }
+
+    } else if (e.target.name === '고장') {
+
+      if (inputData.length > 1) {
+        await addDoc(collection(dbService, "break"), {
+          // await dbService.collection("nweets").add({
+          createdAt: Date().substring(0, 15),  // 필요한 부분만 잘라서 add
+          이동수단ID: newData.이동수단ID,
+          위치: newData.위치,
+          상세위치: newData.상세위치,
+          타입: newData.타입,
+          연식: newData.연식 + '년',
+          text: inputData
+        });
+        setInputData(""); //입력창 초기화
+        alert('해당 데이터를 이동 요청하였습니다.');
+        setOpen(false)
+        // ※ 공란체크도 필요
+      } else if (inputData.length <= 1) {
+        alert('고장 신고 사유를 입력해 주세요.');
+      }
+
+    } else if (e.target.name === '결제') {
+
+      if (inputData.length >= 4) {
+        await addDoc(collection(dbService, "pay"), {
+          // await dbService.collection("nweets").add({
+          createdAt: Date().substring(11, 24),  // 필요한 부분만 잘라서 add
+          이동수단ID: newData.이동수단ID,
+          위치: newData.위치,
+          상세위치: newData.상세위치,
+          타입: newData.타입,
+          연식: newData.연식 + '년',
+          text: inputData + '원'
+        });
+        setInputData(""); //입력창 초기화
+        alert(' 결제내역을 추가하셨습니다.');
+        setOpen(false)
+        // ※ 공란체크도 필요
+      } else if (inputData.length < 4) {
+        alert('결제내역을 입력해주세요.');
+      }
+
+    }
+
+
   }
 
   return (
@@ -51,6 +200,7 @@ function Manage({ item }) {
         }}
         onPageChange={onPageChange}
         onRowClick={onRowClick}
+        onRowDoubleClick={openPopup}
       >
 
         {/* field - 받은 데이터의 key값, title - 보여줄 컬럼명 */}
@@ -61,6 +211,19 @@ function Manage({ item }) {
         <GridColumn field="연식" title="연식" />
       </Grid>
       <Naver item={item} clickData={clickData} />
+
+      {open === true ?
+        (<div className='popup' style={{ display: 'none' }}>
+          <div onClick={closePopup}>X</div>
+          선택한 이동수단ID : {newData.이동수단ID}<br />
+          상세위치 : {newData.상세위치}<br />
+          <button className='pay' onClick={onPay}> 결제 </button>
+          <button className='move' onClick={onMove}> 이동 </button>
+          <button className='breakdown' onClick={onBreakdown}> 고장 </button>
+          {showInput && <input type="text" placeholder={inputText} value={inputData} onChange={onChange} />}
+          {showBtn && <button onClick={onSendData} name={showBtnText}>{showBtnText}</button>}
+        </div >) : ""
+      }
     </>
   );
 }

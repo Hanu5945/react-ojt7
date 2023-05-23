@@ -72,8 +72,7 @@ function Naver({ item, clickData }) {
 
         };
 
-        // 클릭한 데이터의 길이가 undefined이 아니면(0도 undefined으로 취급하기 때문에 명시적으로 적어줌))
-        // 그리드 행 클릭시 openTooltip 함수 실행
+        // 그리드 클릭한 행이 있다면 openTooltip 함수 실행
         if (clickIdx !== undefined) {
             openTooltip(clickIdx);
         }
