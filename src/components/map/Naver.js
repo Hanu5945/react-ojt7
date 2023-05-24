@@ -82,7 +82,13 @@ function Naver({ item, clickData }) {
         };
     }, [item, lat, long, clickIdx]);
 
-    return <div id="map" style={{ width: '50%', height: '400px' }}></div>;
+    return (
+        <>
+            위치 및 정보 확인
+            <div id="map" style={{ width: '50%', height: '400px' }}>
+
+            </div>
+        </>)
 }
 
 export default Naver;

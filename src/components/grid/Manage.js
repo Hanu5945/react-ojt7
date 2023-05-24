@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useCallback} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Grid, GridColumn } from '@progress/kendo-react-grid';
 import "@progress/kendo-theme-default/dist/all.css";
 import Naver from 'components/map/Naver';
@@ -61,14 +61,14 @@ function Manage({ item }) {
   useEffect(() => {
     if (open) {
       let popup = document.querySelector('.popup');
-        popup.style.display = 'block';
-        popup.style.border = 'solid 3px black';
-        popup.style.width = '300px';
-        popup.style.height = '100px';
-        popup.style.background = 'white';
-        popup.style.position = 'relative';
-        popup.style.bottom = '390px';
-        popup.style.left = '51%';
+      popup.style.display = 'block';
+      popup.style.border = 'solid 3px black';
+      popup.style.width = '300px';
+      popup.style.height = '100px';
+      popup.style.background = 'white';
+      popup.style.position = 'relative';
+      popup.style.bottom = '390px';
+      popup.style.left = '51%';
     }
   }, [open]);  // open이 바뀌면 useEffect 감지
 
@@ -77,14 +77,14 @@ function Manage({ item }) {
   let breakdown = document.querySelector('.breakdown');
   let pay = document.querySelector('.pay');
   if (showInput === true) {
-    if(move){
+    if (move) {
       move.style.display = 'none';      // 이동, 고장 버튼 숨기기
     }
     if (breakdown) {
-    breakdown.style.display = 'none';
+      breakdown.style.display = 'none';
     }
-    if (pay){
-    pay.style.display = 'none';
+    if (pay) {
+      pay.style.display = 'none';
     }
     console.log('if문 접근');
   }
@@ -117,8 +117,8 @@ function Manage({ item }) {
 
   // input에 입력한 글 업데이트
   const onChange = useCallback((e) => {
-      setInputData(e.target.value);
-    },[]
+    setInputData(e.target.value);
+  }, []
   );
 
 
@@ -237,6 +237,27 @@ function Manage({ item }) {
           <button className='breakdown' onClick={onBreakdown}> 고장 </button>
           {showInput && <input type="text" placeholder={inputText} value={inputData} onChange={onChange} />}
           {showBtn && <button onClick={onSendData} name={showBtnText}>{showBtnText}</button>}
+
+
+          <select name="name" id="id">
+            <option value="">이동 요청 : 대여소 정보 목록</option>
+            <option value="dog">무역전시관입구</option>
+            <option value="cat">대전컨벤션센터</option>
+            <option value="hamster">한밭수목원</option>
+            <option value="parrot">정부청사 입구</option>
+            <option value="spider">대전시청</option>
+            <option value="goldfish">엑스포과학공원</option>
+          </select>
+
+          <select name="name" id="id">
+            <option value="">고장 신고 : 고장 사유 목록</option>
+            <option value="dog">단말기 고장</option>
+            <option value="cat">브레이크 고장</option>
+            <option value="hamster">체인 체결 불량</option>
+            <option value="parrot">타이어 펑크</option>
+            <option value="spider">페달 고장</option>
+            <option value="goldfish">기타</option>
+          </select>
         </div >) : ""
       }
     </>

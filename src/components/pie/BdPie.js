@@ -20,7 +20,7 @@ function BdPie({ breakData }) {
     return (
         <div>
             <Chart>
-                <ChartTitle text="고장신고 접수 Pie " />
+                <ChartTitle text="고장신고 접수 기록" />
                 <ChartSeries>
                     <ChartSeriesItem
                         type="pie"
