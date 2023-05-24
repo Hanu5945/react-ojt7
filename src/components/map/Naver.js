@@ -58,7 +58,7 @@ function Naver({ item, clickData }) {
             tooltipContent += `상세위치 : ${item[idx].상세위치}</br>`;
             tooltipContent += `타입 : ${item[idx].타입}</br>`;
             tooltipContent += `연식 : ${item[idx].연식}</br>`;
-            tooltipContent += `${idx}`;
+            // tooltipContent += `구매일자 : ${item[idx].createdAt}</br>`;
             tooltipContent += `</div>`;
 
             const tooltip = new window.naver.maps.InfoWindow({

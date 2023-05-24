@@ -1,4 +1,4 @@
-import React, { useState, useEffect }from 'react'
+import React, { useState, useEffect } from 'react'
 import { dbService } from 'fbase';
 import Move from 'components/grid/Move';
 function MoveRequest() {
@@ -14,6 +14,9 @@ function MoveRequest() {
         id: doc.id,
         ...doc.data()
       }))
+
+      // sort 사용하여 오름차순
+      moveArray.sort((a, b) => a.이동수단ID.localeCompare(b.이동수단ID));
       setMove(moveArray);
     })
   }, [])
@@ -21,7 +24,7 @@ function MoveRequest() {
   return (
     <div>
       <div>이동요청</div>
-      <Move move={move}/>
+      <Move moveData={move} />
     </div>
   )
 }

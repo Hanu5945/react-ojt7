@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback} from 'react';
 import { Grid, GridColumn } from '@progress/kendo-react-grid';
 import "@progress/kendo-theme-default/dist/all.css";
 import Naver from 'components/map/Naver';
@@ -61,14 +61,14 @@ function Manage({ item }) {
   useEffect(() => {
     if (open) {
       let popup = document.querySelector('.popup');
-      popup.style.display = 'block';
-      popup.style.border = 'solid 3px black';
-      popup.style.width = '300px';
-      popup.style.height = '100px';
-      popup.style.background = 'white';
-      popup.style.position = 'relative';
-      popup.style.bottom = '390px';
-      popup.style.left = '51%';
+        popup.style.display = 'block';
+        popup.style.border = 'solid 3px black';
+        popup.style.width = '300px';
+        popup.style.height = '100px';
+        popup.style.background = 'white';
+        popup.style.position = 'relative';
+        popup.style.bottom = '390px';
+        popup.style.left = '51%';
     }
   }, [open]);  // open이 바뀌면 useEffect 감지
 
@@ -77,9 +77,15 @@ function Manage({ item }) {
   let breakdown = document.querySelector('.breakdown');
   let pay = document.querySelector('.pay');
   if (showInput === true) {
-    move.style.display = 'none';      // 이동, 고장 버튼 숨기기
+    if(move){
+      move.style.display = 'none';      // 이동, 고장 버튼 숨기기
+    }
+    if (breakdown) {
     breakdown.style.display = 'none';
+    }
+    if (pay){
     pay.style.display = 'none';
+    }
     console.log('if문 접근');
   }
 
@@ -110,15 +116,17 @@ function Manage({ item }) {
   }
 
   // input에 입력한 글 업데이트
-  const onChange = (e) => {
-    setInputData(e.target.value);
-  }
+  const onChange = useCallback((e) => {
+      setInputData(e.target.value);
+    },[]
+  );
+
 
   const onSendData = async (e) => {
     console.log(' 버튼 클릭 ', e.target.name);
     // navigate('/MoveRequest', <MoveRequest test={test} />);
     if (e.target.name === '이동') {
-      
+
       if (inputData.length > 1) {
         await addDoc(collection(dbService, "move"), {
           // await dbService.collection("nweets").add({
@@ -133,6 +141,8 @@ function Manage({ item }) {
         setInputData(""); //입력창 초기화
         alert(' 해당 데이터를 이동요청 하였습니다.');
         setOpen(false)
+        setShowInput(false)
+        setShowBtn(false)
         // ※ 공란체크도 필요
       } else if (inputData.length <= 1) {
         alert('이동 도착예정지를 입력해주세요.');
@@ -148,12 +158,14 @@ function Manage({ item }) {
           위치: newData.위치,
           상세위치: newData.상세위치,
           타입: newData.타입,
-          연식: newData.연식 + '년',
+          연식: newData.연식,
           text: inputData
         });
         setInputData(""); //입력창 초기화
         alert('해당 데이터를 이동 요청하였습니다.');
         setOpen(false)
+        setShowInput(false)
+        setShowBtn(false)
         // ※ 공란체크도 필요
       } else if (inputData.length <= 1) {
         alert('고장 신고 사유를 입력해 주세요.');
@@ -175,6 +187,9 @@ function Manage({ item }) {
         setInputData(""); //입력창 초기화
         alert(' 결제내역을 추가하셨습니다.');
         setOpen(false)
+        setShowInput(false)
+        setShowBtn(false)
+
         // ※ 공란체크도 필요
       } else if (inputData.length < 4) {
         alert('결제내역을 입력해주세요.');
@@ -227,15 +242,5 @@ function Manage({ item }) {
     </>
   );
 }
-
-// 100개의 데이터 생성 test
-
-// const products = Array.from({ length: 100 }, (_, index) => ({
-//   이동수단ID: `ID ${index + 1}`,
-//   위치: `위치 ${index + 1}`,
-//   상세위치: `상세위치 ${index + 1}`,
-//   타입: `타입 ${index + 1}`,
-//   연식: `연식 ${index + 1}`
-// }));
 
 export default Manage
