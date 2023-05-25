@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import Router from 'components/Router';
 import { authService } from 'fbase';
 import { BrowserRouter } from 'react-router-dom';
-import LogOut from 'components/LogOut';
 import Navigation from 'components/Navigation';
 
 
@@ -22,7 +21,7 @@ function Ojt() {
   return (
     <div>
       <BrowserRouter>
-        <header>{userObj && <><Navigation /><LogOut /></>}</header>
+        <header>{userObj && <><Navigation /></>}</header>
         <Router userObj={userObj} />
         <footer></footer>
       </BrowserRouter>

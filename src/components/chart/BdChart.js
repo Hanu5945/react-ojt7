@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chart, ChartLegend, ChartSeries, ChartSeriesItem, ChartTitle } from '@progress/kendo-react-charts';
 
-function BdPie({ breakData }) {
+function BdChart({ breakData }) {
 
     // 이동수단별 빈도수 계산
     const counts = {};
@@ -38,4 +38,4 @@ function BdPie({ breakData }) {
     );
 }
 
-export default BdPie;
+export default BdChart;

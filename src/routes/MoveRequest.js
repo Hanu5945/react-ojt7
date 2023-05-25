@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { dbService } from 'fbase';
 import Move from 'components/grid/Move';
+import MoveChart from 'components/chart/MoveChart';
 function MoveRequest() {
 
   const [move, setMove] = useState([]); // 파이어베이스 move 컬렉션 저장
@@ -25,6 +26,11 @@ function MoveRequest() {
     <div>
       <div>이동요청</div>
       <Move moveData={move} />
+
+      {/* 데이터가 없으면 차트를 보여주지 않는다 */}
+      {move.length >= 1 ?
+        <MoveChart moveData={move} />
+        : <div>No Data</div>}
     </div>
   )
 }

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { dbService } from 'fbase';
 import { collection, addDoc } from "firebase/firestore";
 import Manage from 'components/grid/Manage'
+
 function Management() {
 
   const [data, setDate] = useState([]);
@@ -95,7 +96,7 @@ function Management() {
             (삼항연산자 사용하여 item이 있을때만 실행)
         */}
 
-         임시데이터추가
+        임시데이터추가
         <form onSubmit={onSubmit}>
           <h3>데이터 추가</h3>
           <label style={{ margin: '0px 0px 0px 0px' }}> 이동수단ID : </label><input placeholder='이동수단ID' name='d1' value={d1} onChange={onChange} /><br />

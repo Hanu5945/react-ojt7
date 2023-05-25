@@ -25,10 +25,13 @@ function Payment() {
   return (
     <div>
       <div>결제내역</div>
-      {payData &&<Pay payData={payData} />}
+      {payData && <Pay payData={payData} />}
       {/* 차트 */}
       <div>
-        <PayChart payData={payData} />
+        {/* 데이터가 없으면 차트를 보여주지 않는다 */}
+        {payData.length >= 1 ?
+          <PayChart payData={payData} />
+          : <div>No Data</div>}
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-function Naver({ item, clickData }) {
+function Naver({ manageData, clickData }) {
     // 그리드 데이터를 클릭하면 해당 내용의 툴팁이 표시
     // 클릭한 행의 Idx와 데이터
     // console.log('clickData', clickData);
@@ -10,10 +10,10 @@ function Naver({ item, clickData }) {
 
     // clickData가 있을때만 실행
     if (clickData) {
-        clickIdx = item.indexOf(clickData); // 클릭한 데이터 길이를 변수에 할당
+        clickIdx = manageData.indexOf(clickData); // 클릭한 데이터 길이를 변수에 할당
     }
 
-    const xy = item.map((xyData) => {
+    const xy = manageData.map((xyData) => {
         return xyData.좌표;
     });
 
@@ -35,7 +35,7 @@ function Naver({ item, clickData }) {
 
         const markers = [];
 
-        for (let i = 0; i < item.length; i++) {
+        for (let i = 0; i < manageData.length; i++) {
             const marker = new window.naver.maps.Marker({
                 position: new window.naver.maps.LatLng(lat[i], long[i]),
                 map: map,
@@ -53,12 +53,12 @@ function Naver({ item, clickData }) {
 
         const openTooltip = (idx) => {
             let tooltipContent = `<div class="tooltip">`;
-            tooltipContent += `이동수단ID : ${item[idx].이동수단ID}</br>`;
-            tooltipContent += `위치 : ${item[idx].위치}</br>`;
-            tooltipContent += `상세위치 : ${item[idx].상세위치}</br>`;
-            tooltipContent += `타입 : ${item[idx].타입}</br>`;
-            tooltipContent += `연식 : ${item[idx].연식}</br>`;
-            // tooltipContent += `구매일자 : ${item[idx].createdAt}</br>`;
+            tooltipContent += `이동수단ID : ${manageData[idx].이동수단ID}</br>`;
+            tooltipContent += `위치 : ${manageData[idx].위치}</br>`;
+            tooltipContent += `상세위치 : ${manageData[idx].상세위치}</br>`;
+            tooltipContent += `타입 : ${manageData[idx].타입}</br>`;
+            tooltipContent += `연식 : ${manageData[idx].연식}</br>`;
+            // tooltipContent += `구매일자 : ${manageData[idx].createdAt}</br>`;
             tooltipContent += `</div>`;
 
             const tooltip = new window.naver.maps.InfoWindow({
@@ -80,7 +80,7 @@ function Naver({ item, clickData }) {
         return () => {
             // Cleanup code
         };
-    }, [item, lat, long, clickIdx]);
+    }, [manageData, lat, long, clickIdx]);
 
     return (
         <>

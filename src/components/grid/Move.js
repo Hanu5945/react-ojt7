@@ -4,6 +4,7 @@ import { Grid, GridColumn, GridToolbar } from '@progress/kendo-react-grid';
 import "@progress/kendo-theme-default/dist/all.css";
 import { orderBy } from '@progress/kendo-data-query';
 import { ExcelExport } from "@progress/kendo-react-excel-export";
+import { Button } from "@progress/kendo-react-buttons";
 
 function Move({ moveData }) {
   // 초기 데이터 상태
@@ -28,7 +29,7 @@ function Move({ moveData }) {
   };
 
   // 그리드의 정렬 상태를 관리
-  const [sort, setSort] = useState([{ field: 'createdAt', dir: 'asc' }]); // field: 정렬할 필드 이름 , dir: 정렬 방향 'asc'는 오름차순 'desc'는 내림차순 정렬
+  const [sort, setSort] = useState([{ field: '이동수단ID', dir: 'asc' }]); // field: 정렬할 필드 이름 , dir: 정렬 방향 'asc'는 오름차순 'desc'는 내림차순 정렬
   const handleSortChange = (event) => {
     setSort(event.sort);
   };
@@ -43,6 +44,8 @@ function Move({ moveData }) {
   const exportExcel = () => {
     _export.save(); //_export 에 저장된 save 메서드 호출 (save 메서드는 현재 데이터를 엑셀 파일로 내보내는 역할)
   };
+
+  
   return (
     <div>
       <ExcelExport
@@ -66,7 +69,7 @@ function Move({ moveData }) {
           onPageChange={onPageChange}
           onSortChange={handleSortChange}     // 정렬시 함수 호출
         >
-          <GridToolbar><button onClick={exportExcel}>엑셀 전체 다운로드</button></GridToolbar>
+          <GridToolbar><sapn onClick={exportExcel}><Button>엑셀 전체 다운로드</Button></sapn></GridToolbar>
           <GridColumn field='createdAt' title='요청날짜' />
           <GridColumn field='이동수단ID' title='이동수단ID' />
           <GridColumn field='위치' title='위치' />

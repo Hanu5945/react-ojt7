@@ -1,7 +1,8 @@
 import React from 'react'
 import { authService } from 'fbase'
 import { useNavigate } from 'react-router-dom'
-
+import { Button } from "@progress/kendo-react-buttons";
+import style from 'style/logout.module.css'
 function LogOut() {
     const navigate = useNavigate();
     const onLogOutClick = () => {
@@ -11,9 +12,9 @@ function LogOut() {
         navigate("/");
     }
     return (
-        <div>
-            <button onClick={onLogOutClick}> 로그아웃 </button>
-        </div>
+        < >
+            <div onClick={onLogOutClick}  > <Button className={style.logout}>로그아웃</Button> </div>
+        </>
     )
 }
 

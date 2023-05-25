@@ -39,15 +39,12 @@ function PayChart({ payData }) {
         <ChartTitle text={`연도별 결제금액 차트`} />
         <ChartSeries>
           <ChartSeriesItem
-            type="column"
+            type="area"
             data={chartData}    // 기준으로 삼을 연도 데이터
             field="value"
             categoryField="category"
             tooltip={{
               visible: true,
-              template: (e) => {
-                return `${e.value.toLocaleString()}`;
-              }
             }}
           />
         </ChartSeries>
