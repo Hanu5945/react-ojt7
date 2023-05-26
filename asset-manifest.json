@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/react-ojt7/static/css/main.0ece8904.css",
+    "main.js": "/react-ojt7/static/js/main.1d1481b9.js",
+    "static/media/char.png": "/react-ojt7/static/media/char.bc46973a4cf01bcc2249.png",
+    "index.html": "/react-ojt7/index.html",
+    "main.0ece8904.css.map": "/react-ojt7/static/css/main.0ece8904.css.map",
+    "main.1d1481b9.js.map": "/react-ojt7/static/js/main.1d1481b9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0ece8904.css",
+    "static/js/main.1d1481b9.js"
+  ]
+}
