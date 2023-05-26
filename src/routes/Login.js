@@ -42,7 +42,7 @@ function Login() {
         <>
             <div className={style.container1} >
                 <div className={style.container2}>
-                <a href='http://www.neighbor21.co.kr/main'><img className={style.logo} src={logo}></img></a>
+                <a href='http://www.neighbor21.co.kr/main'><img className={style.logo} src={logo} alt=""></img></a>
                 </div>
 
                 <div className={style.container3}>
@@ -62,7 +62,7 @@ function Login() {
                             </form >
                         </div>
                     </div>
-                    <div className={style.container5}><img className={style.Characters} src={Characters}></img></div>
+                    <div className={style.container5}><img className={style.Characters} src={Characters} alt=""></img></div>
                 </div >
             </div >
         </>

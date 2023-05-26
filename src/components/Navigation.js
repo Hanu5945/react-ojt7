@@ -8,7 +8,7 @@ function Navigation() {
     return (
         <nav className={style.container1}>
             <div className={style.navSpan}>
-                <Link to='/Home'><Tapspan TapText={<img className={style.logo} src={logo}></img>} /> </Link>
+                <Link to='/Home'><Tapspan TapText={<img className={style.logo} src={logo} alt=""></img>} /> </Link>
             </div>
             <div className={style.container2}>
                 <Link className={style.navTap} to='/Management'> <Tapspan TapText={'관리현황'} /> </Link>
