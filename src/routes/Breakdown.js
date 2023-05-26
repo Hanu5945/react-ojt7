@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Break from 'components/grid/Break';
 import { dbService } from 'fbase';
 import BdChart from 'components/chart/BdChart'
+import style from 'style/location.module.css'
 
 function Breakdown() {
   const [breakData, setBreakData] = useState([]); // 파이어베이스 break 컬렉션 저장
@@ -18,10 +19,10 @@ function Breakdown() {
       setBreakData(breakArray);
     })
   }, [])
-  console.log('breakData', breakData);
+
   return (
     <div>
-      고장신고
+      <div className={style.location}><b>관리현황 - 고장신고 목록</b></div>
       {/* 그리드 */}
       <div><Break breakData={breakData} /></div>
       {/* kendoUI Pie */}

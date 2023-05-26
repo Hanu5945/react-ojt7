@@ -8,7 +8,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { Button } from "@progress/kendo-react-buttons";
 import { Input } from "@progress/kendo-react-inputs";
 import { DropDownList } from '@progress/kendo-react-dropdowns';
-
+import style from 'style/manage.module.css';
 
 function Manage({ item }) {
 
@@ -45,7 +45,7 @@ function Manage({ item }) {
   const [inputData, setInputData] = useState('');            // input에 입력한 글
 
   const [dropData, setDropData] = useState("도착예정지 목록");
-  const [dropData2, setDropData2] = useState("고장신고 : 고장사유 목록");
+  const [dropData2, setDropData2] = useState("고장사유 목록");
   const [showDropDownList, setShowDropDownList] = useState(false);       // 팝업   Drop
   const [showDropDownList2, setShowDropDownList2] = useState(false);     // 팝업   Drop
   const [showDropData, setShowDropData] = useState('');  // 가져갈 Drop Data
@@ -80,13 +80,13 @@ function Manage({ item }) {
     if (open) {
       let popup = document.querySelector('.popup');
       popup.style.display = 'block';
-      popup.style.border = 'solid 3px black';
-      popup.style.width = '300px';
-      popup.style.height = '100px';
-      popup.style.background = 'white';
-      popup.style.position = 'relative';
-      popup.style.bottom = '390px';
-      popup.style.left = '51%';
+      // popup.style.width = '300px';
+      // popup.style.height = '100px';
+      // popup.style.background = 'white';
+      // popup.style.position = 'relative';
+      // popup.style.bottom = '390px';
+      // popup.style.left = '51%';
+
     }
   }, [open]);  // open이 바뀌면 useEffect 감지
 
@@ -119,24 +119,15 @@ function Manage({ item }) {
   }
 
   // 이동 버튼
-  // let breakSelect = document.querySelector('.breakSelect');
-  const onMove = (e) => {
-    console.log('onMove 클릭');
+  const onMove = () => {
     setShowBtn(true);
     setShowBtnText('이동요청');
     setShowDropDownList(true);
-    // console.log('breakSelect', breakSelect);
-    // if (breakSelect) {
-    //   console.log('moveSelect if문 접근 후');
-    //   breakSelect.style.display = 'none';
-    // }
   };
 
   // 고장 버튼
   const onBreakdown = () => {
-    // setShowInput(true)
     setShowBtn(true)
-    // setInputText('고장 사유를 입력해주세요.');
     setShowBtnText('고장접수');
     setShowDropDownList2(true);
   }
@@ -153,14 +144,15 @@ function Manage({ item }) {
       setDropData2(e.target.value);
     }
   }, []
+
   );
   // 현재 날짜 한국어로 받기
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
   const currentDate = new Date().toLocaleString('ko-KR', options);  // ko-KR : 한국어로 지정, 옵션변수에 담아 사용
-  
-  const options2 = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+
 
   // 랜덤한 날짜와 시간을 생성
+  const options2 = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
   const randomDate = new Date();
   randomDate.setDate(Math.floor(Math.random() * 31) + 1); // 1에서 31 사이의 날짜
   randomDate.setMonth(Math.floor(Math.random() * 12)); // 0에서 11 사이의 월 (0은 1월)
@@ -187,13 +179,12 @@ function Manage({ item }) {
           연식: newData.연식,
           text: showDropData
         });
-        setInputData(""); //입력창 초기화
+        // setInputData(""); //입력창 초기화
         alert(' 해당 데이터를 이동요청 하였습니다.');
         setOpen(false)
-        // setShowInput(false)
+        // setShowInput(false)naver
         setShowBtn(false)
         setShowDropDownList(false)
-        setShowDropData('');
         // ※ 공란체크도 필요
       } else if (showDropData.length <= 1) {
         alert('이동 도착예정지를 선택해주세요.');
@@ -215,8 +206,7 @@ function Manage({ item }) {
         alert('고장 신고를 접수하였습니다..');
         setOpen(false)
         setShowBtn(false)
-        setShowDropDownList(false)
-        setShowDropData('');
+        setShowDropDownList2(false)
         // ※ 공란체크도 필요
       } else if (showDropData.length <= 1) {
         alert('고장 신고 사유를 입력해 주세요.');
@@ -233,7 +223,7 @@ function Manage({ item }) {
           상세위치: newData.상세위치,
           타입: newData.타입,
           연식: newData.연식,
-          text: inputData + '원'
+          text: inputData
         });
         alert(' 결제내역을 추가하셨습니다.');
         setOpen(false)
@@ -241,88 +231,82 @@ function Manage({ item }) {
         setShowInput(false)
         setInputText('');
         // ※ 공란체크도 필요
-      } else if (inputData.length < 4) {
-        alert('결제내역을 입력해주세요.');
+      } else if (inputData.length <= 1) {
+        alert('결제금액을 입력해주세요.');
+      } else if (inputData.length > 1 && inputData.length <= 4) {
+        alert('최소 단위는 1000원입니다.');
       }
 
     }
-
-
   }
-
-  // const handleChange = (e) => {
-  //   setDropData(e.target.value);
-  //   console.log('D L : ', e.target.value);
-  // }
 
   return (
     <>
-      <Grid
-        style={{ height: "400px" }}
-        data={item.slice(page.skip, page.take + page.skip)} // 넣을 데이터 정보
-        skip={page.skip}    // 처음 표시할 데이터의 인덱스
-        take={page.take}    // 한 페이지에 보여줄 항목 수
-        total={item.length} // 전체 데이터 항목 수 (그리드가 전체 데이터의 크기를 알고 페이징 처리를 할 수 있음)
-        pageable={{
-          buttonCount: 4, // 페이징 버튼 수
-          pageSizes: [5, 10, 15, "All"], // 페이지 크기 선택 옵션
-          pageSizeValue: pageSizeValue, // 초기 페이지 크기
-        }}
-        onPageChange={onPageChange}
-        onRowClick={onRowClick}
-        onRowDoubleClick={openPopup}
-      >
+      <div className={style.container1}>
+        <Grid
+          style={{ height: "400px" }}
+          data={item.slice(page.skip, page.take + page.skip)} // 넣을 데이터 정보
+          skip={page.skip}    // 처음 표시할 데이터의 인덱스
+          take={page.take}    // 한 페이지에 보여줄 항목 수
+          total={item.length} // 전체 데이터 항목 수 (그리드가 전체 데이터의 크기를 알고 페이징 처리를 할 수 있음)
+          pageable={{
+            buttonCount: 4, // 페이징 버튼 수
+            pageSizes: [5, 10, 15, "All"], // 페이지 크기 선택 옵션
+            pageSizeValue: pageSizeValue, // 초기 페이지 크기
+          }}
+          onPageChange={onPageChange}
+          onRowClick={onRowClick}
+          onRowDoubleClick={openPopup}
+        >
 
-        {/* field - 받은 데이터의 key값, title - 보여줄 컬럼명 */}
-        <GridColumn field="이동수단ID" title="이동수단ID" />
-        <GridColumn field="위치" title="위치" />
-        <GridColumn field="상세위치" title="상세위치" />
-        <GridColumn field="타입" title="타입" />
-        <GridColumn field="연식" title="연식" />
-      </Grid>
-      <Naver manageData={item} clickData={clickData} />
+          {/* field - 받은 데이터의 key값, title - 보여줄 컬럼명 */}
+          <GridColumn field="이동수단ID" title="이동수단ID" />
+          <GridColumn field="위치" title="위치" />
+          <GridColumn field="상세위치" title="상세위치" />
+          <GridColumn field="타입" title="타입" />
+          <GridColumn field="연식" title="연식" />
+        </Grid>
 
-      {open === true ?
-        (<div className='popup' style={{ display: 'none' }}>
-          <div onClick={closePopup}>X</div>
-          선택한 이동수단ID : {newData.이동수단ID}<br />
-          상세위치 : {newData.상세위치}<br />
-          <Button className='pay' onClick={onPay}>결제신청</Button>
-          <Button className='move' onClick={onMove}>이동신청</Button>
-          <Button className='breakdown' onClick={onBreakdown}>고장신고</Button>
-          {showInput && <Input name='namePay' placeholder={inputText} value={inputData} onChange={onChange} />}
-          {showBtn && <Button onClick={onSendData} name={showBtnText}>{showBtnText}</Button>}
+        <div className={style.container2}>
+          <Naver manageData={item} clickData={clickData} />
+        </div>
+        {open === true ?
+          (<div className={`popup ${style.popup}`} style={{ display: 'none' }}>
+            <Button className={style.x} onClick={closePopup} >X</Button>
+            <div className={style.container3}>
+              이동수단ID : {newData.이동수단ID}<br />
+              상세위치 : {newData.상세위치}<br />
+            </div>
+            <div className={style.container4}>
+              <Button className={`pay ${style.pay}`} onClick={onPay}>결제신청</Button>
+              <Button className={`move ${style.move}`} onClick={onMove}>이동신청</Button>
+              <Button className={`breakdown ${style.breakdown}`} onClick={onBreakdown}>고장신고</Button>
+            </div>
+            {showInput && <Input className={style.inputPay} name='namePay' placeholder={inputText} value={inputData} onChange={onChange} />}
+            {showDropDownList &&
+              <DropDownList
+                name="move"
+                className={`moveSelect ${style.dropList}`}
+                data={dropDownListData}
+                value={dropData}
+                onChange={onChange}
+              />
+            }
+            {showDropDownList2 &&
+              <DropDownList
+                name="break"
+                className={`breakSelect ${style.dropList}`}
+                data={dropDownListData2}
+                value={dropData2}
+                onChange={onChange}
+              />
+            }
+            {showBtn && <Button className={style.publicBtn} onClick={onSendData} name={showBtnText}>{showBtnText}</Button>}
 
-
-          {showDropDownList &&
-            <DropDownList
-              name="move"
-              className='moveSelect'
-              data={dropDownListData}
-              value={dropData}
-              onChange={onChange}
-              style={{
-                width: "300px",
-              }}
-            />
-          }
-
-          {showDropDownList2 &&
-            <DropDownList
-              name="break"
-              className='breakSelect'
-              data={dropDownListData2}
-              value={dropData2}
-              onChange={onChange}
-              style={{
-                width: "300px",
-              }}
-            />
-          }
-
-        </div >
-        ) : ""
-      }
+          </div >
+          ) : ""
+        }
+      </div>
     </>
   );
 }

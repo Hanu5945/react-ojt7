@@ -3,6 +3,7 @@ import Pay from 'components/grid/Pay'
 import { useState, useEffect } from 'react'
 import { dbService } from 'fbase';
 import PayChart from 'components/chart/PayChart'
+import style from 'style/location.module.css'
 
 function Payment() {
   const [payData, setPayDate] = useState([]); // 파이어베이스 pay 컬렉션 저장할 state
@@ -24,7 +25,8 @@ function Payment() {
 
   return (
     <div>
-      <div>결제내역</div>
+
+      <div className={style.location}><b>관리현황 - 결제내역 목록</b></div>
       {payData && <Pay payData={payData} />}
       {/* 차트 */}
       <div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chart, ChartLegend, ChartSeries, ChartSeriesItem, ChartTitle } from '@progress/kendo-react-charts';
+import { Chart, ChartLegend, ChartSeries, ChartSeriesItem } from '@progress/kendo-react-charts';
 
 function BdChart({ breakData }) {
 
@@ -19,8 +19,15 @@ function BdChart({ breakData }) {
 
     return (
         <div>
+            <h4
+                style={{
+                    textAlign: 'center',
+                    borderTop: '1px black solid',
+                    paddingTop: '30px'
+                }}
+            >고장신고 접수 기록
+            </h4>
             <Chart>
-                <ChartTitle text="고장신고 접수 기록" />
                 <ChartSeries>
                     <ChartSeriesItem
                         type="pie"

@@ -5,6 +5,8 @@ import MoveChart from 'components/chart/MoveChart';
 import Naver from 'components/map/Naver'
 import { useState, useEffect } from 'react'
 import { dbService } from 'fbase';
+import style from 'style/home.module.css'
+
 function Home() {
     const [payData, setPayDate] = useState([]); // 파이어베이스 pay 컬렉션 저장할 state
 
@@ -73,19 +75,20 @@ function Home() {
             setMoveData(moveArray);
         })
     }, [])
+
     return (
         <div>
-            Home
-            <PayChart payData={payData} />
-
-            <BdChart breakData={breakData} />
-
-            <Naver manageData={manageData} />
-
-            <MoveChart moveData={moveData} />
+            <div className={style.container2}>
+                <Naver manageData={manageData} />
+                <MoveChart moveData={moveData} />
+            </div>
+            <div className={style.container3}>
+                <PayChart payData={payData} />
+                <BdChart breakData={breakData} />
+            </div>
             {/* Home 2023 05 24 집에서 수정함 */}
 
-        </div>
+        </div >
     )
 }
 

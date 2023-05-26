@@ -42,7 +42,7 @@ function Pay({ payData }) {
     const exportExcel = () => {
         _export.save(); //_export 에 저장된 save 메서드 호출 (save 메서드는 현재 데이터를 엑셀 파일로 내보내는 역할)
     };
-
+    
     return (
         <div>
             {/* ExcelExport안에 Grid를 넣어서 엑셀 다운로드 */}

@@ -1,6 +1,5 @@
 import React from 'react'
-import { Chart, ChartSeries, ChartSeriesItem, ChartCategoryAxis, ChartCategoryAxisItem, ChartTitle } from '@progress/kendo-react-charts';
-
+import { Chart, ChartSeries, ChartSeriesItem, ChartCategoryAxis, ChartCategoryAxisItem } from '@progress/kendo-react-charts';
 
 function PayChart({ payData }) {
 
@@ -29,14 +28,14 @@ function PayChart({ payData }) {
 
 
   return (
-    <div>
+    <>
+      <h4 style={{ textAlign: 'center' }}>연도별 금액 차트</h4>
       <Chart>
         <ChartCategoryAxis>
           <ChartCategoryAxisItem
             categories={resultDate} // 기준으로 삼을 연도 데이터
           />
         </ChartCategoryAxis>
-        <ChartTitle text={`연도별 결제금액 차트`} />
         <ChartSeries>
           <ChartSeriesItem
             type="area"
@@ -49,7 +48,7 @@ function PayChart({ payData }) {
           />
         </ChartSeries>
       </Chart>
-    </div>
+    </>
   )
 }
 

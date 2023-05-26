@@ -1,5 +1,5 @@
 import React from 'react'
-import { Chart, ChartLegend, ChartSeries, ChartSeriesItem, ChartTitle } from '@progress/kendo-react-charts';
+import { Chart, ChartLegend, ChartSeries, ChartSeriesItem } from '@progress/kendo-react-charts';
 
 function MoveChart({ moveData }) {
 
@@ -17,8 +17,15 @@ function MoveChart({ moveData }) {
     }));
     return (
         <div>
+            <h4
+                style={{
+                    textAlign: 'center',
+                    borderTop: '1px black solid',
+                    paddingTop: '30px'
+                }}
+            >도착예정지 요청
+            </h4>
             <Chart>
-                <ChartTitle text="도착예정지 요청" />
                 <ChartSeries>
                     <ChartSeriesItem
                         type="column"

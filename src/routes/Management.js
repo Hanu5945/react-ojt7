@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { dbService } from 'fbase';
-import { collection, addDoc } from "firebase/firestore";
+// import { collection, addDoc } from "firebase/firestore";
 import Manage from 'components/grid/Manage'
+import style from 'style/location.module.css'
 
 function Management() {
 
@@ -27,77 +28,66 @@ function Management() {
 
 
 
-  // 임시 데이터 추가 하는 곳
-  // let maxLng = data.length; // 임시데이터
-  const [d1, setD1] = useState('');
-  const [d2, setD2] = useState('대전광역시');
-  const [d3, setD3] = useState('');
-  const [d4, setD4] = useState('');
-  const [d5, setD5] = useState('');
-  const [d6, setD6] = useState('');
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    await addDoc(collection(dbService, 'manage'), {
-      createdAt: Date().substring(11, 24),  // 필요한 부분만 잘라서 add
-      이동수단ID: d1,
-      위치: d2,
-      상세위치: d3,
-      좌표: d4,
-      연식: d5 + '년',
-      타입: d6
-    })
-    alert('추가완료');
+  // // 임시 데이터 추가 하는 곳
+  // // let maxLng = data.length; // 임시데이터
+  // const [d1, setD1] = useState('');
+  // const [d2, setD2] = useState('대전광역시');
+  // const [d3, setD3] = useState('');
+  // const [d4, setD4] = useState('');
+  // const [d5, setD5] = useState('');
+  // const [d6, setD6] = useState('');
+  // const onSubmit = async (e) => {
+  //   e.preventDefault();
+  //   await addDoc(collection(dbService, 'manage'), {
+  //     createdAt: Date().substring(11, 24),  // 필요한 부분만 잘라서 add
+  //     이동수단ID: d1,
+  //     위치: d2,
+  //     상세위치: d3,
+  //     좌표: d4,
+  //     연식: d5 + '년',
+  //     타입: d6
+  //   })
+  //   alert('추가완료');
 
-    setD1('');
-    setD2('대전광역시');
-    setD3('');
-    setD4('');
-    setD5('');
-    setD6('');
-  }
+  //   setD1('');
+  //   setD2('대전광역시');
+  //   setD3('');
+  //   setD4('');
+  //   setD5('');
+  //   setD6('');
+  // }
 
-  const onChange = (e) => {
-    console.log('값', e.target.value);
-    if (e.target.name === 'd1') {
-      setD1(e.target.value); // 일단 고정박아놓음
-      console.log(e.target.value);
-    } else if (e.target.name === 'd2') {
-      setD2(e.target.value);      // 일단 고정박아놓음
-    } else if (e.target.name === 'd3') {
-      setD3(e.target.value);
-    } else if (e.target.name === 'd4') {
-      setD4(e.target.value);
-    } else if (e.target.name === 'd5') {
-      setD5(e.target.value);
-    } else if (e.target.name === 'd6') {
-      setD6(e.target.value);
-    }
+  // const onChange = (e) => {
+  //   console.log('값', e.target.value);
+  //   if (e.target.name === 'd1') {
+  //     setD1(e.target.value); // 일단 고정박아놓음
+  //     console.log(e.target.value);
+  //   } else if (e.target.name === 'd2') {
+  //     setD2(e.target.value);      // 일단 고정박아놓음
+  //   } else if (e.target.name === 'd3') {
+  //     setD3(e.target.value);
+  //   } else if (e.target.name === 'd4') {
+  //     setD4(e.target.value);
+  //   } else if (e.target.name === 'd5') {
+  //     setD5(e.target.value);
+  //   } else if (e.target.name === 'd6') {
+  //     setD6(e.target.value);
+  //   }
 
-  }
+  // }
 
   return (
     <div>
-      <div>관리현황</div>
       <div>
-        {/* {data.map((item) => (
-          <div key={item.id} style={{ border: '1px solid black' }}>
-            {item.이동수단ID}<br />
-            {item.좌표._lat}<br />
-            {item.좌표._long}<br />
-            {item.위치}<br />
-            {item.상세위치}<br />
-            {item.타입}<br />
-            {item.연식}<br />
-          </div>
-        ))} */}
-        <Manage item={data} />
-        {/* {data.length > 0 ? <Naver item={data} /> : "" } */}
-        {/* data가 있을때만 실행
+        <div>
+          <div className={style.location}><b>관리현황 - 이동수단 목록</b></div>
+          <Manage item={data} />
+          {/* data가 있을때만 실행
             (삼항연산자 사용하여 item이 있을때만 실행)
         */}
-
-        임시데이터추가
-        <form onSubmit={onSubmit}>
+        </div>
+        {/* 임시데이터추가 */}
+        {/* <form onSubmit={onSubmit}>
           <h3>데이터 추가</h3>
           <label style={{ margin: '0px 0px 0px 0px' }}> 이동수단ID : </label><input placeholder='이동수단ID' name='d1' value={d1} onChange={onChange} /><br />
           <label style={{ margin: '0px 50px 0px 0px' }}>위치 : </label><input placeholder='위치' type='string' name='d2' value={d2} onChange={onChange} /><br />
@@ -106,7 +96,7 @@ function Management() {
           <label style={{ margin: '0px 50px 0px 0px' }}>연식 : </label><input placeholder='연식' type='string' name='d5' value={d5} onChange={onChange} /><br />
           <label style={{ margin: '0px 50px 0px 0px' }}>타입 : </label><input placeholder='타입' type='string' name='d6' value={d6} onChange={onChange} /><br />
           <button> 추가 </button>
-        </form>
+        </form> */}
       </div>
     </div>
   )

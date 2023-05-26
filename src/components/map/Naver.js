@@ -58,7 +58,6 @@ function Naver({ manageData, clickData }) {
             tooltipContent += `상세위치 : ${manageData[idx].상세위치}</br>`;
             tooltipContent += `타입 : ${manageData[idx].타입}</br>`;
             tooltipContent += `연식 : ${manageData[idx].연식}</br>`;
-            // tooltipContent += `구매일자 : ${manageData[idx].createdAt}</br>`;
             tooltipContent += `</div>`;
 
             const tooltip = new window.naver.maps.InfoWindow({
@@ -84,9 +83,15 @@ function Naver({ manageData, clickData }) {
 
     return (
         <>
-            위치 및 정보 확인
-            <div id="map" style={{ width: '50%', height: '400px' }}>
-
+            <div>
+                <h4 style={{ textAlign: 'center' }}>이동수단 위치 및 정보</h4>
+                <div id="map"
+                    style={{
+                        width: '100%',
+                        height: '400px',
+                        border: '1px solid black'
+                    }}>
+                </div>
             </div>
         </>)
 }
