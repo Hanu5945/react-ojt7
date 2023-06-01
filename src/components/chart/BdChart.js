@@ -15,7 +15,7 @@ function BdChart({ breakData }) {
         category: 이동수단ID,
         value: counts[이동수단ID]
     }));
-    console.log('BdPie', breakData);
+    // console.log('BdPie', breakData);
 
     return (
         <div>
