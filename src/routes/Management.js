@@ -81,7 +81,7 @@ function Management() {
       <div>
         <div>
           <div className={style.location}><b>관리현황 - 이동수단 목록</b></div>
-          <Manage item={data} />
+          <Manage manageDate={data} />
           {/* data가 있을때만 실행
             (삼항연산자 사용하여 item이 있을때만 실행)
         */}

@@ -10,8 +10,7 @@ import { Input } from "@progress/kendo-react-inputs";
 import { DropDownList } from '@progress/kendo-react-dropdowns';
 import style from 'style/manage.module.css';
 
-function Manage({ item }) {
-
+function Manage({ manageDate }) {
 
   // 초기 데이터 상태
   const initialDataState = {
@@ -23,15 +22,18 @@ function Manage({ item }) {
 
   // 페이지 변경 시 호출되는 콜백 함수
   const onPageChange = (event) => {
+    console.log('event : ', event);
     const targetEvent = event.targetEvent;
-    const take = targetEvent.value === "All" ? item.length : event.page.take; // All인 경우 : data의 길이를 전부 보여줌, 아닌 경우 : 선택한 숫자만큼 보여줌
     if (targetEvent.value) {
       setPageSizeValue(targetEvent.value);  // 페이지 크기를 변경할 때마다 렌더링
     }
+    const take = targetEvent.value === "All" ? manageDate.length : event.page.take; // All인 경우 : data의 길이를 전부 보여줌, 아닌 경우 : 선택한 숫자만큼 보여줌
     setPage({
       ...event.page,  // 선택한 페이지와 선택한 페이지 크기 관련 상태 관리
       take,           // 한 페이지에 보여줄 항목 수(위의 event에서 정의된 변수를 가져옴)
     });
+    // console.log('...event.page : ', ...event.page);
+    console.log('page : ', page);
   };
 
 
@@ -245,10 +247,10 @@ function Manage({ item }) {
       <div className={style.container1}>
         <Grid
           style={{ height: "400px" }}
-          data={item.slice(page.skip, page.take + page.skip)} // 넣을 데이터 정보
+          data={manageDate.slice(page.skip, page.take + page.skip)} // 넣을 데이터 정보
           skip={page.skip}    // 처음 표시할 데이터의 인덱스
           take={page.take}    // 한 페이지에 보여줄 항목 수
-          total={item.length} // 전체 데이터 항목 수 (그리드가 전체 데이터의 크기를 알고 페이징 처리를 할 수 있음)
+          total={manageDate.length} // 전체 데이터 항목 수 (그리드가 전체 데이터의 크기를 알고 페이징 처리를 할 수 있음)
           pageable={{
             buttonCount: 4, // 페이징 버튼 수
             pageSizes: [5, 10, 15, "All"], // 페이지 크기 선택 옵션
@@ -268,7 +270,7 @@ function Manage({ item }) {
         </Grid>
 
         <div className={style.container2}>
-          <Naver manageData={item} clickData={clickData} />
+          <Naver manageData={manageDate} clickData={clickData} />
         </div>
         {open === true ?
           (<div className={`popup ${style.popup}`} style={{ display: 'none' }}>
